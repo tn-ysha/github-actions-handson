@@ -1,6 +1,7 @@
 """電卓モジュール。基本的な四則演算を提供する。"""
 
 
+
 def add(a: float, b: float) -> float:
     """2つの数値を加算する。"""
     return a + b
