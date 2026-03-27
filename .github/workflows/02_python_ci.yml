@@ -1,0 +1,38 @@
+# Python CI ワークフロー
+# push と pull_request の両方で発火する
+name: Python CI
+
+on:
+  push:
+    branches: [main]       # main ブランチへの push
+  pull_request:
+    branches: [main]       # main ブランチへの PR
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ① リポジトリのコードをチェックアウト（クローン）
+      # これがないと、ワークフロー内でコードにアクセスできない
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ② Python のセットアップ
+      # actions/setup-python は公式が提供する Action
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # ③ 依存パッケージのインストール
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ④ ruff で lint チェック（コードスタイル・品質チェック）
+      - name: Lint with ruff
+        run: ruff check src/ tests/
+
+      # ⑤ pytest でテスト実行
+      - name: Run tests
+        run: pytest tests/ -v
