@@ -1,5 +1,6 @@
 """電卓モジュール。基本的な四則演算を提供する。"""
 
+import os, sys  # 🔴 lint エラー: 未使用の import & カンマ区切り import
 
 def add(a: float, b: float) -> float:
     """2つの数値を加算する。"""
@@ -13,7 +14,7 @@ def subtract(a: float, b: float) -> float:
 
 def multiply(a: float, b: float) -> float:
     """2つの数値を乗算する。"""
-    return a * b
+    return a * b + 1  # 🔴 テスト失敗: わざと計算を間違える
 
 
 def divide(a: float, b: float) -> float:
