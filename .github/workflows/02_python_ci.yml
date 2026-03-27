@@ -18,14 +18,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ② Python のセットアップ
-      # actions/setup-python は公式が提供する Action
+      # ② Python のセットアップ + キャッシュ
+      # cache: "pip" を追加するだけで pip のキャッシュが有効になる
+      # キャッシュキーは requirements.txt のハッシュ値から自動生成される
+      # → requirements.txt が変わらない限り、キャッシュが再利用される
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"              # ← これだけ！
 
       # ③ 依存パッケージのインストール
+      # キャッシュがあっても pip install は必要（キャッシュはダウンロード済みファイル）
+      # ただし、ネットワークからのダウンロードがスキップされるので高速化される
       - name: Install dependencies
         run: pip install -r requirements.txt
 
