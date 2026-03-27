@@ -1,0 +1,56 @@
+# GitHub Pages デプロイワークフロー
+name: Deploy to GitHub Pages
+
+# main ブランチへの push でのみ発火
+on:
+  push:
+    branches: [main]
+
+# ★新概念: permissions
+# このワークフローに与える権限を明示的に指定する
+# GitHub Pages へのデプロイには以下が必要
+permissions:
+  pages: write      # Pages への書き込み権限
+  id-token: write   # デプロイ認証に必要なトークン
+
+# ★新概念: concurrency
+# 同時に複数のデプロイが走らないように制御する
+# 例: 短時間に2回 push すると、古い方はキャンセルされる
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # ジョブ1: サイトをビルド（アップロード）
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ★新概念: artifacts（成果物）
+      # ビルド結果を「成果物」としてアップロードする
+      # 次の deploy ジョブがこの成果物を使ってデプロイする
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/    # docs/ ディレクトリをまるごとアップロード
+
+  # ジョブ2: GitHub Pages にデプロイ
+  deploy:
+    # ★新概念: needs
+    # build ジョブが完了してから実行する（ジョブ間の依存関係）
+    needs: build
+    runs-on: ubuntu-latest
+
+    # ★新概念: environment
+    # GitHub の「環境」機能と連携する
+    # デプロイ先の URL が Actions の画面に表示される
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

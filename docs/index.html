@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Actions ハンズオン</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 0 20px;
+            background: #0d1117;
+            color: #e6edf3;
+        }
+        h1 { color: #58a6ff; }
+        .step {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+        .step-done { border-left: 4px solid #3fb950; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .badge-ci { background: #1f6feb; }
+        .badge-cd { background: #8957e5; }
+    </style>
+</head>
+<body>
+    <h1>GitHub Actions Handson</h1>
+    <p>GitHub Actions を使った CI/CD ハンズオンの学習記録サイトです。</p>
+    <p>このサイト自体が GitHub Actions で自動デプロイされています!</p>
+
+    <h2>Learning Steps</h2>
+
+    <div class="step step-done">
+        <h3><span class="badge badge-ci">CI</span> Step 1: Hello World</h3>
+        <p>push をトリガーにワークフローを実行する基本を学んだ。</p>
+    </div>
+
+    <div class="step step-done">
+        <h3><span class="badge badge-ci">CI</span> Step 2: Python CI</h3>
+        <p>ruff (lint) と pytest (テスト) を自動実行する CI パイプラインを構築した。</p>
+    </div>
+
+    <div class="step step-done">
+        <h3><span class="badge badge-cd">CD</span> Step 3: GitHub Pages Deploy</h3>
+        <p>main ブランチにマージしたら自動でこのサイトがデプロイされる仕組みを構築した。</p>
+    </div>
+</body>
+</html>
